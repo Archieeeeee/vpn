@@ -9,3 +9,5 @@ yum install -y git
 cd /opt && git clone https://github.com/Archieeeeee/vpn.git
 cd vpn && bash vpn-setup.sh
 
+
+
