@@ -63,11 +63,12 @@ install_kernel() {
         check_centos_version
         if [ "$?" == "6" ]; then
           rpm -Uvh http://www.elrepo.org/elrepo-release-6-8.el6.elrepo.noarch.rpm
+          yum --enablerepo=elrepo-kernel install kernel-lt -y
         else
           rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+          yum --enablerepo=elrepo-kernel install kernel-ml -y
         fi 
-        yum --enablerepo=elrepo-kernel install kernel-ml -y
-
+        
         #confirm kernel installed
         rpm -qa | grep kernel
 
