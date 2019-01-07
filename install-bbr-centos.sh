@@ -94,7 +94,8 @@ select_grub() {
                 if [ "$?" == "6" ]; then
                   sed -c -i "s/default=.*/default=$bootidx/" /etc/grub.conf
                 else 
-                  grub2-set-default $bootidx
+                  #grub2-set-default $bootidx
+                  grubby --set-default-index=$bootidx
                 fi
           echo "Current default boot is " `grubby  --default-kernel`
         else
