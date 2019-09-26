@@ -107,6 +107,53 @@ select_grub() {
 }
 
 
+select_grub_auto_reboot() {
+        #show grub menus
+        echo "Current default boot is " `grubby  --default-kernel`
+        echo "============================="
+        check_centos_version
+        if [ "$?" == "6" ]; then
+          grep title /etc/grub.conf | nl -v 0
+        else
+          egrep ^menuentry /etc/grub2.cfg | cut -f 2 -d \' | nl -v 0
+        fi
+        echo "============================="
+        
+        for (i=1; i<15; i++) {
+        	local bootKnel = `grubby --info=$i | egrep '^kernel' | sed -r "s/.*vmlinuz-(.*)/\1/" | cut -d '-' -f 1`
+        	# stop loop if boot menu overflow: grubby: kernel not found
+        	if [[ $bootKnel == grubby* ]]; then
+        		continue
+    		fi
+    		
+    		# check version
+    		if version_gt $bootKnel "4.9.0"; then
+    		
+    			# set grub index
+    			echo "Set grub index now"
+    			local bootidx=$i
+    			check_centos_version
+                if [ "$?" == "6" ]; then
+                  sed -c -i "s/default=.*/default=$bootidx/" /etc/grub.conf
+                else 
+                  #grub2-set-default $bootidx
+                  grubby --set-default-index=$bootidx
+                fi
+                
+                echo "Current default boot is " `grubby  --default-kernel`
+                
+                # index found, no further go
+                echo "Reboot now"
+                # reboot
+                continue
+    		fi
+    		
+        }
+
+}
+
+
+
     check_bbr
     if [ $? -eq 1 ]; then
         echo "BBR already installed, quit now."
@@ -128,7 +175,8 @@ select_grub() {
 
     check_boot_kernel
     if [ $? -eq 0 ]; then
-        select_grub
+        #select_grub
+        select_grub_auto_reboot
     else
         echo "Please reboot and run the script again"
     fi
