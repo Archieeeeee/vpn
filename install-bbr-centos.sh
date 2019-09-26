@@ -120,7 +120,7 @@ select_grub_auto_reboot() {
         echo "============================="
         
         for ((i=1; i<15; i++)) do
-        	local bootKnel = `grubby --info=$i | egrep '^kernel' | sed -r "s/.*vmlinuz-(.*)/\1/" | cut -d '-' -f 1`
+        	local bootKnel=`grubby --info=$i | egrep '^kernel' | sed -r "s/.*vmlinuz-(.*)/\1/" | cut -d '-' -f 1`
         	# stop loop if boot menu overflow: grubby: kernel not found
         	if [[ $bootKnel == grubby* ]]; then
         		continue
