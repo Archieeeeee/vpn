@@ -119,7 +119,7 @@ select_grub_auto_reboot() {
         fi
         echo "============================="
         
-        for ((i=1; i<15; i++)) do
+        for ((i=0; i<15; i++)) do
         	local bootKnel=`grubby --info=$i | egrep '^kernel' | sed -r "s/.*vmlinuz-(.*)/\1/" | cut -d '-' -f 1`
         	echo "bootKnel is $bootKnel"
         	local kkk=`grubby --info=$i | egrep '^kernel'`
