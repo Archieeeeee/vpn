@@ -122,9 +122,11 @@ select_grub_auto_reboot() {
         for ((i=1; i<15; i++)) do
         	local bootKnel=`grubby --info=$i | egrep '^kernel' | sed -r "s/.*vmlinuz-(.*)/\1/" | cut -d '-' -f 1`
         	echo "bootKnel is $bootKnel"
+        	local kkk = `grubby --info=$i | egrep '^kernel'`
+        	echo "kkk is $kkk"
         	# stop loop if boot menu overflow: grubby: kernel not found
         	if [[ $bootKnel == grubby* ]]; then
-        		continue
+        		break
     		fi
     		
     		# check version
@@ -146,7 +148,7 @@ select_grub_auto_reboot() {
                 # index found, no further go
                 echo "Reboot now"
                 # reboot
-                continue
+                break
     		fi
     		
         done
