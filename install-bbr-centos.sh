@@ -179,6 +179,8 @@ select_grub_auto_reboot() {
         #select_grub
         select_grub_auto_reboot
     else
+    	echo "Kenerl installed, reboot now"
+    	reboot
         echo "Please reboot and run the script again"
     fi
 
