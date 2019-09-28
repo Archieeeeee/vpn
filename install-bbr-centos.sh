@@ -60,6 +60,12 @@ enable_bbr() {
         #check bbr installation 
         sysctl net.ipv4.tcp_available_congestion_control
         sysctl -n net.ipv4.tcp_congestion_control
+	
+	echo "============================="
+        echo "available_congestion_control:    `sysctl -n net.ipv4.tcp_available_congestion_control`"
+        echo "current_congestion_control:      `sysctl -n net.ipv4.tcp_congestion_control`"
+        echo "============================="
+	
         lsmod | grep bbr
 }
 
