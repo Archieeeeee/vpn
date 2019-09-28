@@ -44,6 +44,12 @@ check_boot_kernel() {
 }
 
 enable_bbr() {
+        #if enabled
+		if [[ `sysctl -n net.ipv4.tcp_congestion_control` =~ bbr$ ]]; then
+        		echo "BBR already enabled"
+        		return
+    	fi 
+        
         #enable bbr
         sed -i "/\b\(net.core.default_qdisc\)\b/d"  /etc/sysctl.conf
         sed -i "/\b\(net.ipv4.tcp_congestion_control\)\b/d"  /etc/sysctl.conf
@@ -157,6 +163,7 @@ select_grub_auto_reboot() {
 
     check_bbr
     if [ $? -eq 1 ]; then
+        enable_bbr
         echo "BBR already installed, quit now."
         exit
     fi
