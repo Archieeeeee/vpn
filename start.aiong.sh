@@ -1,2 +1,2 @@
 #!/bin/bash
-cd /data/projects/aiongrust && cargo run --release --bin quicserver && cargo run --release --bin ssngserver
+cd /data/projects/aiongrust && cargo build --release --bin quicserver && cargo build --release --bin ssngserver
