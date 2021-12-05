@@ -1,4 +1,4 @@
-systemctl stop warp-svc
+systemctl restart warp-svc
 
 warp-cli --accept-tos delete
 warp-cli --accept-tos register
