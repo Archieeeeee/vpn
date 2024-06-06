@@ -4,7 +4,7 @@ systemctl stop kdump.service; systemctl disable kdump.service;
 
 ckk=$(cat /etc/default/grub |grep crashkernel)
 echo "grub cmd is $ckk"
-if [ "$(echo "$ckk" | wc -l)" -lt 1 ]; then
+if [ "$ckk" -eq "" ]; then
   echo "no crashkernel"
   exit 0
 else
