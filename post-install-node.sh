@@ -13,5 +13,5 @@ fi
 grubby --update-kernel=ALL --args="crashkernel=no"
 grubby --remove-args="crashkernel=no" --update=ALL
 
-sleep 3
+sleep 10
 reboot
